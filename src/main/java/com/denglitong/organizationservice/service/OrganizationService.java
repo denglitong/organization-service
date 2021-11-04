@@ -22,7 +22,9 @@ public class OrganizationService {
     }
 
     public Organization getOrg(String organizationId) {
-        return orgRepository.findByOrganizationId(organizationId);
+        Organization org = orgRepository.findByOrganizationId(organizationId);
+        org.setContactName("OLD::" + org.getContactName());
+        return org;
     }
 
     public void saveOrg(Organization org) {
