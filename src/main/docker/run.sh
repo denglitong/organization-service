@@ -19,6 +19,12 @@ while ! `nc -z configurationservice $CONFIGSERVER_PORT`; do sleep 3; done
 echo ">>>>>>>>>>>> Configuration Server has started"
 
 echo "********************************************************"
+echo "Waiting for the kafka server to start on port  $KAFKASERVER_PORT"
+echo "********************************************************"
+while ! `nc -z kafkaservice $KAFKASERVER_PORT`; do sleep 10; done
+echo "******* Kafka Server has started"
+
+echo "********************************************************"
 echo "Starting Organization Service  "
 echo "********************************************************"
 java -Djava.security.egd=file:/dev/./urandom \
@@ -27,4 +33,6 @@ java -Djava.security.egd=file:/dev/./urandom \
      -Dspring.cloud.config.uri=$CONFIGSERVER_URI \
      -Dspring.profiles.active=$PROFILE \
      -Dsecurity.oauth2.resource.userInfoUri=$AUTHSERVER_URI \
+     -Dspring.cloud.stream.kafka.binder.zkNodes=$ZKSERVER_URI \
+     -Dspring.cloud.stream.kafka.binder.brokers=$KAFKASERVER_URI \
      -jar /usr/local/organizationservice/@project.build.finalName@.jar

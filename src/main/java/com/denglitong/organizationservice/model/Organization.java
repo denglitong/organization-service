@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author litong.deng@foxmail.com
@@ -11,7 +12,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "organizations")
-public class Organization {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = -2736148320592715970L;
 
     @Id
     @Column(name = "organization_id", nullable = false)

@@ -6,6 +6,20 @@ spring:
   cloud:
     config:
       enabled: true
+    stream:
+      bindings:
+        # output是通道名称，映射到代码中source.output()通道
+        output:
+          # topic
+          destination: org_change_topic
+          content-type: application/json
+      # 使用kafka作为消息总线，可以使用RabbitMQ代替
+      kafka:
+        binder:
+          # kafka和zoopkeeper的网络位置
+          zkNodes: localhost
+          brokers: localhost
+          replication-factor: 1
   config:
     # 指定Spring Cloud Config服务器的位置
     import: "optional:configserver:http://configurationservice:8888"
